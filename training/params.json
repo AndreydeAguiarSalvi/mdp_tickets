@@ -1,0 +1,25 @@
+{
+    "model" : {
+        "architecture" : [784, 700, 500, 10],
+        "name" : "MLP_700_500"
+    },
+    "optimizer": {
+        "type": "adam",
+        "lr" : 0.001,
+        "lr_decay" : 1e-2,
+        "beta1" : 0.9,
+        "beta2" : 0.999,
+        "eps" : 1e-8,
+        "weight_decay" : 0,
+        "momentum" : 0.9
+    },
+    "train" : {
+        "train_batch" : 512,
+        "valid_batch" : 0.2,
+        "epochs" : 5,
+        "print_every" : 50
+    },
+    "working_dir" : "/home/andrey/Documents/mdp_tickets/results",
+    "device" : "cuda:0",
+    "try" : 0
+}
