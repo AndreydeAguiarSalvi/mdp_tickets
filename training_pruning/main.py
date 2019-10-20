@@ -17,7 +17,7 @@ sys.path.append('../')
 from pytorch.agent import Agent
 from pytorch.state import State
 from pytorch.net import NN
-from pytorch.utils import q_value, create_environment, train, get_optimizer, policy_loader
+from pytorch.utils import q_value, train, get_optimizer, policy_loader
 
 def __load_data(config):
     # number of subprocesses to use for data loading
