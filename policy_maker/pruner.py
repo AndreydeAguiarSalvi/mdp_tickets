@@ -94,6 +94,7 @@ def main():
     MIN_ALPHA = config['mdp']['MIN_ALPHA']
     GAMMA = config['mdp']['GAMMA']
     alphas = np.linspace(1.0, MIN_ALPHA, N_EPISODES)
+    epsilons = np.linspace(1.0, config['agent']['epsilon'])
     
 
     q_table = dict()
@@ -150,7 +151,14 @@ def main():
 
         state = deepcopy(start_state)
         total_reward = .0
-        ALPHA = alphas[e]
+        
+        # Or ALPHA is constant and we search over the EPSILON
+        # or the opposite
+        if config['mdp']['ALPHA_SEARCH']:
+            ALPHA = alphas[e]
+        else:
+            ALPHA = config['mdp']['FIXED_ALPHA']
+            config['agent']['epsilon'] = epsilons[e]
         
         agent = Agent(config, ACTIONS, model, valid_loader, criterion) 
 
