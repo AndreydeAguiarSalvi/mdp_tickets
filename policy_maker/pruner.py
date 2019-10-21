@@ -18,10 +18,10 @@ from copy import deepcopy
 from random import shuffle
 
 sys.path.append('../')
-from pytorch.agent import Agent
-from pytorch.state import State
-from pytorch.net import NN
-from pytorch.utils import q_value, create_environment, train, validation, get_optimizer, q_table_loader, q_table_saver
+from common.agent import Agent
+from common.state import State
+from common.net import NN
+from common.utils import q_value, create_environment, train, validation, get_optimizer, q_table_loader, q_table_saver
 
 
 def __load_data(config):

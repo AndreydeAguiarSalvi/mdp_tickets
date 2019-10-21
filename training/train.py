@@ -14,8 +14,8 @@ import time
 import logging
 
 sys.path.append('../')
-from pytorch.net import NN
-from pytorch.utils import train, get_optimizer
+from common.net import NN
+from common.utils import train, get_optimizer
 
 
 

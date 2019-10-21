@@ -31,7 +31,7 @@
         "valid_loss" : 0
     },
     "working_dir" : "/home/andrey/Documents/mdp_tickets/results",
-    "policy_dir" : "../results/MLP_300_100/_QLEARNING_WIKI/18_10_2019/17_27/MIN_ALPHA-0.2__GAMMA-0.8__PRUNE_TYPE-ROW__PRUNE_PERCENT-0.8__EPSILON-0.2__REWARD_TYPE-ACCURACY__IS_GAMEOVER-True",
+    "policy_dir" : "../results/MLP_300_100/_QLEARNING_WIKI/20_10_2019/17_55/MIN_ALPHA-0.2__GAMMA-0.8__PRUNE_TYPE-ROW__PRUNE_PERCENT-0.8__EPSILON-0.2__REWARD_TYPE-ACCURACY__IS_GAMEOVER-True",
     "device" : "cuda:0",
     "environment_protocol" : "ROW"
 }
