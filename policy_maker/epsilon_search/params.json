@@ -1,6 +1,6 @@
 {
     "agent" : {
-        "reward_type": "ACCURACY",
+        "reward_type": "NEG_ACC",
         "prune_percentage" : 0.8,
         "is_gameover" : true,
         "gameover_threshold" : 0.85,
@@ -11,7 +11,7 @@
         "MAX_STEPS_PER_EPISODES" : 1000,
         "GAMMA" : 0.8,
         "Q_COMPUTATION" : "QL_WIKI",
-        "ALPHA" : 0.9
+        "ALPHA" : 0.8
     },
     "model" : {
         "architecture" : [784, 300, 100, 10],
@@ -40,7 +40,7 @@
         "train_loss" : 0,
         "valid_loss" : 0
     },
-    "working_dir" : "/home/andrey/Documents/mdp_tickets/results",
+    "working_dir" : "/home/andrey/Documents/mdp_tickets",
     "device" : "cuda:0",
     "environment_protocol" : "ROW",
     "try" : "_QLEARNING_WIKI"

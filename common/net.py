@@ -1,10 +1,11 @@
 # https://stackoverflow.com/questions/51748138/pytorch-how-to-set-requires-grad-false
 
+from copy import deepcopy
+
 import torch
 from torch import nn
 import torch.nn.functional as F
 
-from copy import deepcopy
 
 class NN(nn.Module):
 

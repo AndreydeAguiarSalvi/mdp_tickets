@@ -1,14 +1,12 @@
 import torch
-
 import random
 import numpy as np
-
 from copy import deepcopy
 
-from pytorch.net import NN
-from pytorch.utils import validation, q_value
+from common.net import NN
+from common.state import State
+from common.utils import validation, q_value
 
-from pytorch.state import State
 
 class Agent:
 
@@ -72,11 +70,6 @@ class Agent:
         new_state = State(new_masks, new_env, reward, state.n_prunes)
         new_state.prune()
 
-        # if self.is_gameover:
-        #     # Verify if the game has game over
-        #     if reward == -100:
-        #         self.is_done = True
-        
         # Verify if the game has winned
         if (new_state.remaining_weights <= self.remaining_weights):
             self.is_done = True
@@ -119,6 +112,9 @@ class Agent:
     
 
     def __compute_reward(self, state, valid_loss, accuracy):
+        if self.reward_computation == 'NEG_ACC':
+            return -(1. - accuracy)
+            
         if self.is_gameover:    
             if (self.reward_computation == 'ACCURACY'):
                 return accuracy if accuracy > self.gameover_threshold * state.last_reward else -100

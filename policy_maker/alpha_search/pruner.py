@@ -36,9 +36,9 @@ def __load_data(config):
     transform = transforms.ToTensor()
 
     # choose the training and test datasets
-    train_data = datasets.MNIST(root='../data', train=True,
+    train_data = datasets.MNIST(root= config['working_dir'] + '/data', train=True,
                                     download=False, transform=transform)
-    test_data = datasets.MNIST(root='../data', train=False,
+    test_data = datasets.MNIST(root= config['working_dir'] + '/data', train=False,
                                     download=False, transform=transform)
 
     # obtain training indices that will be used for validation
@@ -104,7 +104,7 @@ def main():
     ##########################
     # Create sub_working_dir #
     ##########################
-    sub_working_dir = '{}/{}/{}/{}/{}'.format(
+    sub_working_dir = '{}/results/{}/{}/{}/{}'.format(
         config['working_dir'],
         config['model']['name'], 
         config['try'],
@@ -143,6 +143,8 @@ def main():
         start_state.last_reward = accuracy
     elif config['agent']['reward_type'] == 'RcRa':
         start_state.last_reward = accuracy
+    elif config['agent']['reward_type'] == 'NEG_ACC':
+        start_state.last_reward = - (1. - accuracy)
 
     #########
     # Prune #

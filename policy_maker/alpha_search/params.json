@@ -1,6 +1,6 @@
 {
     "agent" : {
-        "reward_type": "ACCURACY",
+        "reward_type": "NEG_ACC",
         "prune_percentage" : 0.8,
         "epsilon" : 0.2,
         "is_gameover" : true,
@@ -40,7 +40,7 @@
         "train_loss" : 0,
         "valid_loss" : 0
     },
-    "working_dir" : "/home/andrey/Documents/mdp_tickets/results",
+    "working_dir" : "/home/andrey/Documents/mdp_tickets",
     "device" : "cuda:0",
     "environment_protocol" : "ROW",
     "try" : "_QLEARNING_WIKI"
