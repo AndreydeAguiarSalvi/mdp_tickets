@@ -17,7 +17,7 @@ import pandas as pd
 from copy import deepcopy
 from random import shuffle
 
-sys.path.append('../')
+sys.path.append('../../')
 from common.agent import Agent
 from common.state import State
 from common.net import NN
@@ -91,9 +91,8 @@ def main():
     N_STATES = len(ACTIONS)
     N_EPISODES = config['mdp']['N_EPISODES']
     MAX_EPISODE_PER_STEPS = config['mdp']['MAX_STEPS_PER_EPISODES']
-    MIN_ALPHA = config['mdp']['MIN_ALPHA']
+    ALPHA = config['mdp']['ALPHA']
     GAMMA = config['mdp']['GAMMA']
-    alphas = np.linspace(1.0, MIN_ALPHA, N_EPISODES)
     epsilons = np.linspace(1.0, config['agent']['epsilon'])
     
 
@@ -115,8 +114,8 @@ def main():
             time.strftime("%H", time.localtime()),
             time.strftime("%M", time.localtime())
         ),
-        'MIN_ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__EPSILON-{}__REWARD_TYPE-{}__IS_GAMEOVER-{}'.format(
-            MIN_ALPHA, GAMMA,
+        'EPSILON_SEARCH__ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__MIN_EPSILON-{}__REWARD_TYPE-{}__IS_GAMEOVER-{}'.format(
+            ALPHA, GAMMA,
             config['environment_protocol'], 
             config['agent']['prune_percentage'],
             config['agent']['epsilon'],
@@ -152,14 +151,7 @@ def main():
         state = deepcopy(start_state)
         total_reward = .0
         
-        # Or ALPHA is constant and we search over the EPSILON
-        # or the opposite
-        if config['mdp']['ALPHA_SEARCH']:
-            ALPHA = alphas[e]
-        else:
-            ALPHA = config['mdp']['FIXED_ALPHA']
-            config['agent']['epsilon'] = epsilons[e]
-        
+        config['agent']['epsilon'] = epsilons[e]
         agent = Agent(config, ACTIONS, model, valid_loader, criterion) 
 
         for i in range(MAX_EPISODE_PER_STEPS):
@@ -174,9 +166,9 @@ def main():
             
             elif config['mdp']['Q_COMPUTATION'] == 'QL_M':
                 # Q-Learning from Meneguzzi
-                # do not exists this np.max
+                next_action = agent.choose_action(q_table, next_state)
                 q_value(q_table, state)[action] = q_value(q_table, state, action) + \
-                    ALPHA * (reward + np.max(q_value(q_table, next_state)) - q_value(q_table, state, action))
+                    ALPHA * (reward + q_value(q_table, next_state, next_action) - q_value(q_table, state, action))
 
             elif config['mdp']['Q_COMPUTATION'] == 'QL_WIKI':
                 # Q-Learning from from Wikipedia
@@ -187,8 +179,6 @@ def main():
             state = next_state
             if done:
                 break
-            if i % 100 == 0 and i != 0:
-                q_table_saver(q_table, config['sub_working_dir'], '/q_table_e-{}_i-{}.tsv'.format(e, i))
 
         logging.info("Episode {}: reward type {}: total reward -> {}".format(e + 1, config['agent']['reward_type'], total_reward))
 

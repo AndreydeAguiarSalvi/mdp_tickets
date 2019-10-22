@@ -11,9 +11,7 @@
         "MAX_STEPS_PER_EPISODES" : 1000,
         "MIN_ALPHA" : 0.2,
         "GAMMA" : 0.8,
-        "Q_COMPUTATION" : "QL_WIKI",
-        "FIXED_ALPHA" : 0.9,
-        "ALPHA_SEARCH" : false
+        "Q_COMPUTATION" : "QL_WIKI"
     },
     "model" : {
         "architecture" : [784, 300, 100, 10],

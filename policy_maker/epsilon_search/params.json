@@ -1,0 +1,47 @@
+{
+    "agent" : {
+        "reward_type": "ACCURACY",
+        "prune_percentage" : 0.8,
+        "is_gameover" : true,
+        "gameover_threshold" : 0.85,
+        "epsilon" : 0.1
+    },
+    "mdp" : {
+        "N_EPISODES" : 15,
+        "MAX_STEPS_PER_EPISODES" : 1000,
+        "GAMMA" : 0.8,
+        "Q_COMPUTATION" : "QL_WIKI",
+        "ALPHA" : 0.9
+    },
+    "model" : {
+        "architecture" : [784, 300, 100, 10],
+        "name" : "MLP_300_100"
+    },
+    "optimizer": {
+        "type": "adam",
+        "lr" : 0.001,
+        "beta1" : 0.9,
+        "beta2" : 0.999,
+        
+        "lr_decay" : 1e-2,
+        "eps" : 1e-8,
+        "weight_decay" : 0,
+        "momentum" : 0.9
+    },
+    "train" : {
+        "train_batch" : 512,
+        "valid_batch" : 0.2,
+        "epochs" : 30,
+        "print_every" : 50
+    },
+    "teacher" : {
+        "train_acc" : 0,
+        "valid_acc" : 0,
+        "train_loss" : 0,
+        "valid_loss" : 0
+    },
+    "working_dir" : "/home/andrey/Documents/mdp_tickets/results",
+    "device" : "cuda:0",
+    "environment_protocol" : "ROW",
+    "try" : "_QLEARNING_WIKI"
+}

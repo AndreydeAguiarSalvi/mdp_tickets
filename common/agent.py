@@ -5,8 +5,6 @@ import numpy as np
 
 from copy import deepcopy
 
-# import sys
-# sys.path.append('../')
 from pytorch.net import NN
 from pytorch.utils import validation, q_value
 
