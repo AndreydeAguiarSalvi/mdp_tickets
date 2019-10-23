@@ -9,9 +9,9 @@
     "mdp" : {
         "N_EPISODES" : 15,
         "MAX_STEPS_PER_EPISODES" : 1000,
-        "GAMMA" : 0.8,
+        "GAMMA" : 0.9,
         "Q_COMPUTATION" : "SARSA",
-        "ALPHA" : 0.8
+        "ALPHA" : 0.9
     },
     "model" : {
         "architecture" : [784, 300, 100, 10],
