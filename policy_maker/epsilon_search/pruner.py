@@ -92,9 +92,11 @@ def main():
     N_EPISODES = config['mdp']['N_EPISODES']
     MAX_EPISODE_PER_STEPS = config['mdp']['MAX_STEPS_PER_EPISODES']
     ALPHA = config['mdp']['ALPHA']
-    GAMMA = config['mdp']['GAMMA']
-    epsilons = np.linspace(1.0, config['agent']['epsilon'])
-    
+    if (len(sys.argv) == 2):
+        GAMMA = float(sys.argv[1])
+    else: 
+        GAMMA = config['mdp']['GAMMA']
+    epsilons = np.linspace(1.0, config['agent']['epsilon'], N_EPISODES)
 
     q_table = dict()
     start_state = State(model.masks, ACTIONS)
@@ -114,13 +116,12 @@ def main():
             time.strftime("%H", time.localtime()),
             time.strftime("%M", time.localtime())
         ),
-        'EPSILON_SEARCH__ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__MIN_EPSILON-{}__REWARD_TYPE-{}__IS_GAMEOVER-{}'.format(
+        'EPSILON_SEARCH__ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__MIN_EPSILON-{}__REWARD_TYPE-{}'.format(
             ALPHA, GAMMA,
             config['environment_protocol'], 
             config['agent']['prune_percentage'],
             config['agent']['epsilon'],
-            config['agent']['reward_type'],
-            config['agent']['is_gameover']
+            config['agent']['reward_type']
         )
     )
 

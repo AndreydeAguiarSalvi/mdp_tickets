@@ -33,7 +33,6 @@ class Agent:
         self.device = config['device']
         self.epsilon = config['agent']['epsilon']
         self.is_done = False
-        self.is_gameover = config['agent']['is_gameover']
         self.gameover_threshold = config['agent']['gameover_threshold']
         self.total_weights = 0
         for mask in model.masks:
@@ -59,9 +58,11 @@ class Agent:
 
         # compute the reward
         reward = self.__compute_reward(state, valid_loss, accuracy)
-        self.model.masks[0] = self.model.masks[0].to('cpu')
-        self.model.masks[1] = self.model.masks[1].to('cpu')
-        self.model.masks[2] = self.model.masks[2].to('cpu')
+        for mask in self.model.masks:
+            mask = mask.to('cpu')
+        # self.model.masks[0] = self.model.masks[0].to('cpu')
+        # self.model.masks[1] = self.model.masks[1].to('cpu')
+        # self.model.masks[2] = self.model.masks[2].to('cpu')
         
         # new subenvironment
         new_env = deepcopy(state.environment)
@@ -73,7 +74,7 @@ class Agent:
         # Verify if the game has winned
         if (new_state.remaining_weights <= self.remaining_weights):
             self.is_done = True
-            reward *= 10
+            reward += 100
         
         return new_state, reward, self.is_done
 
@@ -112,21 +113,9 @@ class Agent:
     
 
     def __compute_reward(self, state, valid_loss, accuracy):
-        if self.reward_computation == 'NEG_ACC':
+        if (self.reward_computation == 'ACCURACY'):
             return -(1. - accuracy)
-            
-        if self.is_gameover:    
-            if (self.reward_computation == 'ACCURACY'):
-                return accuracy if accuracy > self.gameover_threshold * state.last_reward else -100
-            elif (self.reward_computation == 'LOSS'):
-                return -valid_loss if valid_loss < ( (1. - self.gameover_threshold) + 1.) * state.last_reward else -100
-            elif (self.reward_computation == 'RcRa'):
-                rw = (accuracy) * (state.remaining_weights / self.total_weights)
-                return rw if rw > self.gameover_threshold * state.last_reward else -100
-        else:
-            if (self.reward_computation == 'ACCURACY'):
-                return accuracy
-            elif (self.reward_computation == 'LOSS'):
-                return -valid_loss
-            elif (self.reward_computation == 'RcRa'):
-                return (accuracy) * (self.total_weights / state.remaining_weights)
+        elif (self.reward_computation == 'LOSS'):
+            return -valid_loss
+        elif (self.reward_computation == 'ACC_COMPRESSION'):
+            return -(1. - accuracy) * (self.total_weights / state.remaining_weights)

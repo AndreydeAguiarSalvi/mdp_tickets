@@ -98,7 +98,8 @@ def create_environment(masks, protocol):
 def q_value(q_table, state, action=None):
     
     if state not in q_table:
-        q_table[state] = np.zeros(len(state.environment))
+        # q_table[state] = np.zeros(len(state.environment))
+        q_table[state] = np.full(len(state.environment), -100.)
         
     if action is None:
         return q_table[state]

@@ -2,8 +2,6 @@
     "agent" : {
         "reward_type": "NEG_ACC",
         "prune_percentage" : 0.8,
-        "is_gameover" : true,
-        "gameover_threshold" : 0.85,
         "epsilon" : 0.1
     },
     "mdp" : {

@@ -2,16 +2,14 @@
     "agent" : {
         "reward_type": "NEG_ACC",
         "prune_percentage" : 0.8,
-        "epsilon" : 0.2,
-        "is_gameover" : true,
-        "gameover_threshold" : 0.85
+        "epsilon" : 0.1
     },
     "mdp" : {
         "N_EPISODES" : 15,
         "MAX_STEPS_PER_EPISODES" : 1000,
         "MIN_ALPHA" : 0.2,
-        "GAMMA" : 0.8,
-        "Q_COMPUTATION" : "QL_WIKI"
+        "GAMMA" : 0.9,
+        "Q_COMPUTATION" : "SARSA"
     },
     "model" : {
         "architecture" : [784, 300, 100, 10],
