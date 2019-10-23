@@ -42,6 +42,5 @@
     },
     "working_dir" : "/home/andrey/Documents/mdp_tickets",
     "device" : "cuda:0",
-    "environment_protocol" : "ROW",
-    "try" : "_QLEARNING_WIKI"
+    "environment_protocol" : "ROW"
 }

@@ -106,7 +106,7 @@ def main():
     sub_working_dir = '{}/results/{}/{}/{}/{}'.format(
         config['working_dir'],
         config['model']['name'], 
-        config['try'],
+        '_' + config['agent']['reward_type'],
         '{}_{}_{}/{}_{}'.format(
             time.strftime("%d", time.localtime()),
             time.strftime("%m", time.localtime()),
@@ -114,12 +114,11 @@ def main():
             time.strftime("%H", time.localtime()),
             time.strftime("%M", time.localtime())
         ),
-        'EPSILON_SEARCH__ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__MIN_EPSILON-{}__REWARD_TYPE-{}__IS_GAMEOVER-{}'.format(
+        'EPSILON_SEARCH__ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__MIN_EPSILON-{}__IS_GAMEOVER-{}'.format(
             ALPHA, GAMMA,
             config['environment_protocol'], 
             config['agent']['prune_percentage'],
             config['agent']['epsilon'],
-            config['agent']['reward_type'],
             config['agent']['is_gameover']
         )
     )

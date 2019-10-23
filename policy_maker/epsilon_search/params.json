@@ -10,7 +10,7 @@
         "N_EPISODES" : 15,
         "MAX_STEPS_PER_EPISODES" : 1000,
         "GAMMA" : 0.8,
-        "Q_COMPUTATION" : "QL_WIKI",
+        "Q_COMPUTATION" : "SARSA",
         "ALPHA" : 0.8
     },
     "model" : {
@@ -42,6 +42,5 @@
     },
     "working_dir" : "/home/andrey/Documents/mdp_tickets",
     "device" : "cuda:0",
-    "environment_protocol" : "ROW",
-    "try" : "_QLEARNING_WIKI"
+    "environment_protocol" : "ROW"
 }
