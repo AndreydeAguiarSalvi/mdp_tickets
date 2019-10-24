@@ -73,7 +73,7 @@ class Agent:
         # Verify if the game has winned
         if (new_state.remaining_weights <= self.remaining_weights):
             self.is_done = True
-            reward += 100
+            reward += 1000
         
         return new_state, reward, self.is_done
 
