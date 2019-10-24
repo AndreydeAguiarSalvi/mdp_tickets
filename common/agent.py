@@ -33,7 +33,6 @@ class Agent:
         self.device = config['device']
         self.epsilon = config['agent']['epsilon']
         self.is_done = False
-        self.gameover_threshold = config['agent']['gameover_threshold']
         self.total_weights = 0
         for mask in model.masks:
             self.total_weights += np.prod(mask.weight.shape, 0)
