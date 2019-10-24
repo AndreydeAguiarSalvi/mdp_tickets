@@ -1,6 +1,6 @@
 {
     "agent" : {
-        "reward_type": "NEG_ACC",
+        "reward_type": "ACC_COMPRESSION",
         "prune_percentage" : 0.8,
         "epsilon" : 0.1
     },

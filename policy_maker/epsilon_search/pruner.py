@@ -138,13 +138,11 @@ def main():
     logging.info('Validation Loss performed: {}\tValidation Accuracy performed: {}'.format(loss, accuracy))
 
     if config['agent']['reward_type'] == 'LOSS':
-        start_state.last_reward = loss 
+        start_state.last_reward = -loss 
     elif config['agent']['reward_type'] == 'ACCURACY':
-        start_state.last_reward = accuracy
-    elif config['agent']['reward_type'] == 'RcRa':
-        start_state.last_reward = accuracy
-    elif config['agent']['reward_type'] == 'NEG_ACC':
         start_state.last_reward = -(1. - accuracy)
+    elif config['agent']['reward_type'] == 'NEG_ACC':
+        start_state.last_reward = - (1. - accuracy) * 1.
 
     #########
     # Prune #
