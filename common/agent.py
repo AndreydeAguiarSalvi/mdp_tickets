@@ -117,4 +117,8 @@ class Agent:
         elif (self.reward_computation == 'LOSS'):
             return -valid_loss
         elif (self.reward_computation == 'ACC_COMPRESSION'):
-            return -(1. - accuracy) * (self.total_weights / state.remaining_weights)
+            return -(1. - accuracy) * (state.remaining_weights / self.total_weights)
+        elif (self.reward_computation == 'MY_RCRA'):
+            C = state.remaining_weights / self.total_weights
+            A = accuracy / state.last_reward # Needs to be / state.last_accuracy
+            return 1. - (C(2. - C) * A)

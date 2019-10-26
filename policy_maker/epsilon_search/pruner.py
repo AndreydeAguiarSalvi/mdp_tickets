@@ -70,6 +70,9 @@ def main():
     json_str = json_file.read()
     config = json.loads(json_str)
 
+    if (len(sys.argv) == 3):
+        config['mdp']['Q_COMPUTATION'] = sys.argv[2]
+
     # loading the dataset
     train_loader, valid_loader, test_loader = __load_data(config)
 
@@ -92,7 +95,7 @@ def main():
     N_EPISODES = config['mdp']['N_EPISODES']
     MAX_EPISODE_PER_STEPS = config['mdp']['MAX_STEPS_PER_EPISODES']
     ALPHA = config['mdp']['ALPHA']
-    if (len(sys.argv) == 2):
+    if (len(sys.argv) == 3):
         GAMMA = float(sys.argv[1])
     else: 
         GAMMA = config['mdp']['GAMMA']
@@ -137,12 +140,14 @@ def main():
     loss, accuracy = validation(model, valid_loader, criterion)
     logging.info('Validation Loss performed: {}\tValidation Accuracy performed: {}'.format(loss, accuracy))
 
-    if config['agent']['reward_type'] == 'LOSS':
-        start_state.last_reward = -loss 
-    elif config['agent']['reward_type'] == 'ACCURACY':
+    if config['agent']['reward_type'] == 'ACCURACY':
         start_state.last_reward = -(1. - accuracy)
-    elif config['agent']['reward_type'] == 'NEG_ACC':
-        start_state.last_reward = - (1. - accuracy) * 1.
+    elif config['agent']['reward_type'] == 'LOSS':
+        start_state.last_reward = -loss
+    elif config['agent']['reward_type'] == 'ACC_COMPRESSION':
+        start_state.last_reward = -(1. - accuracy) 
+    elif config['agent']['reward_type'] == 'MY_RCRA':
+        start_state.last_reward = -(1. - accuracy)
 
     #########
     # Prune #
