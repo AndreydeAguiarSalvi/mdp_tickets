@@ -17,7 +17,7 @@
     "train" : {
         "train_batch" : 512,
         "valid_batch" : 0.2,
-        "epochs" : 2,
+        "epochs" : 3,
         "print_every" : 50
     },
     "prune" : {

@@ -99,6 +99,9 @@ def main():
 
     config = __adjust_config(config)
 
+    if len(sys.argv == 2):
+        config['policy_dir'] = sys.argv[1]
+
     # loading the dataset
     train_loader, valid_loader, test_loader = __load_data(config)
 
@@ -143,11 +146,10 @@ def main():
     ##############
     # Last Train #
     ##############
-    train(model, train_loader, valid_loader, criterion, optimizer, config['train']['epochs'], config['train']['print_every'], config['device'])
+    train(model, train_loader, valid_loader, criterion, optimizer, 5, config['train']['print_every'], config['device'])
     
-    checkpoint = config['policy_dir'] + '/model__epochs-{}__prune_each-{}__optimizer-{}.pth'.format(
-        config['train']['epochs'],
-        config['prune']['each'],
+    checkpoint = config['policy_dir'] + '/model__prune_each-{}__optimizer-{}.pth'.format(
+        config['train']['epochs'] * config['prune']['each'],
         config['optimizer']['type']
     )
     torch.save(model.state_dict(), checkpoint)
@@ -161,8 +163,8 @@ def main():
     class_total = list(0. for i in range(10))
     model.eval() # prep model for evaluation
 
-    for data, target in test_loader:
-        data, target = data.to('cuda'), target.to('cuda')
+    for data, target in valid_loader:
+        data, target = data.to(config['device']), target.to(config['device'])
 
         # forward pass: compute predicted outputs by passing inputs to the model
         output = model(data)
@@ -181,8 +183,8 @@ def main():
             class_total[label] += 1
 
     # calculate and print avg test loss
-    test_loss = test_loss/len(test_loader.sampler)
-    logging.info('Test Loss: {:.6f}\n'.format(test_loss))
+    test_loss = test_loss/len(valid_loader.sampler)
+    logging.info('Valid Loss: {:.6f}\n'.format(test_loss))
 
     results = []
     for i in range(10):
