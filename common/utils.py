@@ -54,7 +54,7 @@ def train(model, trainloader, testloader, criterion, optimizer, epochs=5, print_
             if steps % print_every == 0:
                 # Turn off gradients for validation, will speed up inference
                 with torch.no_grad():
-                    valid_loss, valid_acc = validation(model, testloader, criterion)
+                    valid_loss, valid_acc = validation(model, testloader, criterion, device)
                 
                 logging.info(
                     'Epoch - Step: [{}/{} - {}] train_loss[{:.5f}] train_acc[{:.3f}] valid_loss[{:.5f}] valid_acc[{:.3f}]'.format(
