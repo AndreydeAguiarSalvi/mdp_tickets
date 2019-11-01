@@ -99,7 +99,7 @@ def main():
 
     config = __adjust_config(config)
 
-    if len(sys.argv == 2):
+    if len(sys.argv) == 2:
         config['policy_dir'] = sys.argv[1]
 
     # loading the dataset
