@@ -77,7 +77,7 @@ def __create_args():
     # MDP parameters
     parser.add_argument('-N_E', '--N_EPISODES', help='The maximum of episodes to agent perform', default=None)
     parser.add_argument('-M_S', '--MAX_STEPS_PER_EPISODES', help='Maximum of steps per episode', default=None)
-    parser.add_argument('-M_A', '--ALPHA', help='Minimum number of Alpha for Alpha Search', default=None)
+    parser.add_argument('-A', '--ALPHA', help='Minimum number of Alpha for Alpha Search', default=None)
     parser.add_argument('-G', '--GAMMA', help='Gamma', default=None)
     parser.add_argument('-Q_C', '--Q_COMPUTATION', help='The equation to compute the Quality', default=None)
     # Agent parameters
@@ -104,8 +104,8 @@ def __adjust_config(args, config):
         config['mdp']['N_EPISODES'] = args['N_EPISODES']
     if args['MAX_STEPS_PER_EPISODES'] is not None:
         config['mdp']['MAX_STEPS_PER_EPISODES'] = args['MAX_STEPS_PER_EPISODES']
-    if args['MIN_ALPHA'] is not None:
-        config['mdp']['MIN_ALPHA'] = args['MIN_ALPHA']
+    if args['ALPHA'] is not None:
+        config['mdp']['ALPHA'] = args['ALPHA']
     if args['Q_COMPUTATION'] is not None:
         config['mdp']['Q_COMPUTATION'] = args['Q_COMPUTATION']
 

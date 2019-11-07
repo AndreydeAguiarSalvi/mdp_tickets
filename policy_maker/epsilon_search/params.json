@@ -38,7 +38,7 @@
         "train_loss" : 0,
         "valid_loss" : 0
     },
-    "working_dir" : "/home/andrey/Documents/mdp_tickets",
-    "device" : "cuda:0",
+    "working_dir" : "/A/andrey/mdp_tickets",
+    "device" : "cuda:3",
     "environment_protocol" : "ROW"
 }
