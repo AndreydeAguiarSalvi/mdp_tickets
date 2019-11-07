@@ -86,7 +86,7 @@ def __create_args():
     parser.add_argument('-r_t', '--reward_type', help='Type of reward computation', default=None)
     # Train parameters
     parser.add_argument('-e', '--epochs', help='The number of epochs to train the model before the pruning', default=None)
-    parser.add_argument('-p_e', '--print_every', help='Print accuracy at every p_e epochs', default=None)
+    parser.add_argument('-prt', '--print_every', help='Print accuracy at every p_e epochs', default=None)
 
     args = vars(parser.parse_args())
     return args

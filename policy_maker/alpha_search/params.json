@@ -9,7 +9,7 @@
         "MAX_STEPS_PER_EPISODES" : 1000,
         "MIN_ALPHA" : 0.2,
         "GAMMA" : 0.9,
-        "Q_COMPUTATION" : "SARSA"
+        "Q_COMPUTATION" : "QL_M"
     },
     "model" : {
         "architecture" : [784, 300, 100, 10],
