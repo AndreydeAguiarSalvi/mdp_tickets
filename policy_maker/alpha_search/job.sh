@@ -4,3 +4,4 @@ python pruner.py -eps 0.2
 python pruner.py -eps 0.3
 python pruner.py -eps 0.4
 python pruner.py -eps 0.5
+python pruner.py -eps 0.6

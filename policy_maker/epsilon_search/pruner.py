@@ -12,6 +12,7 @@ import json
 import time
 import random
 import logging
+import argparse
 import numpy as np
 import pandas as pd
 from copy import deepcopy
@@ -223,7 +224,7 @@ def main():
             next_state, reward, done = agent.act(state, action)
             total_reward += reward
             
-            elif config['mdp']['Q_COMPUTATION'] == 'QL_M':
+            if config['mdp']['Q_COMPUTATION'] == 'QL_M':
                 # Q-Learning from Ghallab, Nau and Traverso
                 q_value(q_table, state)[action] = q_value(q_table, state, action) + \
                     ALPHA * (reward + q_value(q_table, next_state) - q_value(q_table, state, action))
