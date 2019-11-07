@@ -35,8 +35,6 @@ def train(model, trainloader, testloader, criterion, optimizer, epochs=5, print_
         for images, labels in trainloader:
             steps += 1
             
-            # Flatten images into a 784 long vector
-            # images.resize_(images.size()[0], 784)
             images, labels = images.to(device), labels.to(device)
             
             optimizer.zero_grad()

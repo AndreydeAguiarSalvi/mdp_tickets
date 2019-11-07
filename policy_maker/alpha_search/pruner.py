@@ -12,6 +12,7 @@ import json
 import time
 import random
 import logging
+import argparse
 import numpy as np
 import pandas as pd
 from copy import deepcopy
@@ -63,6 +64,66 @@ def __load_data(config):
     return train_loader, valid_loader, test_loader
 
 
+def __create_args():
+    # Arguments
+    parser = argparse.ArgumentParser(
+        description='Performs a Alpha Search with MDP.'
+    )
+    # General parameters
+    parser.add_argument('-d', '--device', help='Cuda to run the model', default=None)
+    parser.add_argument('-e_p', '--environment_protocol', help='The type of pruning', default=None)
+    # Model parameters
+    parser.add_argument('-m_a', '--model_architecture', help='The number of neurons of the NN', default=None)
+    # MDP parameters
+    parser.add_argument('N_E', '--N_EPISODES', help='The maximum of episodes to agent perform', default=None)
+    parser.add_argument('M_S', '--MAX_STEPS_PER_EPISODES', help='Maximum of steps per episode', default=None)
+    parser.add_argument('M_A', '--MIN_ALPHA', help='Minimum number of Alpha for Alpha Search', default=None)
+    parser.add_argument('G', '--GAMMA', help='Gamma', default=None)
+    parser.add_argument('Q_C', '--Q_COMPUTATION', help='The equation to compute the Quality', default=None)
+    # Agent parameters
+    parser.add_argument('-p_e', '--prune_percentage', help='Percentage of weights to prune', default=None)
+    parser.add_argument('-eps', '--epsilon', help='Percentage of random actions from agent', default=None)
+    parser.add_argument('-r_t', '--reward_type', help='Type of reward computation', default=None)
+    # Train parameters
+    parser.add_argument('e', '--epochs', help='The number of epochs to train the model before the pruning', default=None)
+    parser.add_argument('p_e', '--print_every', help='Print accuracy at every p_e epochs', default=None)
+
+    args = vars(parser.parse_args())
+    return args
+
+
+def __adjust_config(args, config):
+    if args['device'] is not None:
+        config['device'] = args['device']
+    if args['environment_protocol'] is not None:
+        config['environment_protocol'] = args['environment_protocol']
+    if args['model_architecture'] is not None:
+        config['model']['architecture'] = args['model_architecture']
+    
+    if args['N_EPISODES'] is not None:
+        config['mdp']['N_EPISODES'] = args['N_EPISODES']
+    if args['MAX_STEPS_PER_EPISODES'] is not None:
+        config['mdp']['MAX_STEPS_PER_EPISODES'] = args['MAX_STEPS_PER_EPISODES']
+    if args['MIN_ALPHA'] is not None:
+        config['mdp']['MIN_ALPHA'] = args['MIN_ALPHA']
+    if args['Q_COMPUTATION'] is not None:
+        config['mdp']['Q_COMPUTATION'] = args['Q_COMPUTATION']
+
+    if args['prune_percentage'] is not None:
+        config['agent']['prune_percentage'] = args['prune_percentage']
+    if args['epsilon'] is not None:
+        config['agent']['epsilon'] = args['epsilon']
+    if args['reward_type'] is not None:
+        config['agent']['reward_type'] = args['reward_type']
+    
+    if args['epochs'] is not None:
+        config['train']['epochs'] = args['epochs']
+    if args['print_every'] is not None:
+        config['train']['print_every'] = args['print_every']
+    
+    return config
+
+
 def main():
     logging.basicConfig(level=logging.DEBUG,
                         format="[%(asctime)s %(filename)s] %(message)s")
@@ -70,8 +131,9 @@ def main():
     json_str = json_file.read()
     config = json.loads(json_str)
 
-    if (len(sys.argv) == 3):
-        config['mdp']['Q_COMPUTATION'] = sys.argv[2]
+    args = __create_args()
+
+    config = __adjust_config(args, config)
 
     # loading the dataset
     train_loader, valid_loader, test_loader = __load_data(config)
@@ -95,10 +157,7 @@ def main():
     N_EPISODES = config['mdp']['N_EPISODES']
     MAX_EPISODE_PER_STEPS = config['mdp']['MAX_STEPS_PER_EPISODES']
     MIN_ALPHA = config['mdp']['MIN_ALPHA']
-    if (len(sys.argv) == 3):
-        GAMMA = float(sys.argv[1])
-    else: 
-        GAMMA = config['mdp']['GAMMA']
+    GAMMA = config['mdp']['GAMMA']
     alphas = np.linspace(1.0, MIN_ALPHA, N_EPISODES)
     
 
@@ -121,7 +180,7 @@ def main():
             time.strftime("%M", time.localtime())
         ),
         'ALPHA_SEARCH__MIN_ALPHA-{}__GAMMA-{}__PRUNE_TYPE-{}__PRUNE_PERCENT-{}__EPSILON-{}__REWARD_TYPE-{}'.format(
-            MIN_ALPHA, GAMMA,
+            MIN_ALPHA, GAMMA if config['mdp']['Q_COMPUTATION'] != 'QL_M' else 'None',
             config['environment_protocol'], 
             config['agent']['prune_percentage'],
             config['agent']['epsilon'],
@@ -166,16 +225,10 @@ def main():
             next_state, reward, done = agent.act(state, action)
             total_reward += reward
             
-            if config['mdp']['Q_COMPUTATION'] == 'SARSA':
+            if config['mdp']['Q_COMPUTATION'] == 'QL_M':
+                # Q-Learning from Ghallab, Nau and Traverso
                 q_value(q_table, state)[action] = q_value(q_table, state, action) + \
-                    ALPHA * (reward + GAMMA * np.max(q_value(q_table, next_state)) - q_value(q_table, state, action))
-            
-            elif config['mdp']['Q_COMPUTATION'] == 'QL_M':
-                # Q-Learning from Meneguzzi
-                # do not exists this np.max
-                next_action = agent.choose_action(q_table, next_state)
-                q_value(q_table, state)[action] = q_value(q_table, state, action) + \
-                    ALPHA * (reward + q_value(q_table, next_state, next_action) - q_value(q_table, state, action))
+                    ALPHA * (reward + q_value(q_table, next_state) - q_value(q_table, state, action))
 
             elif config['mdp']['Q_COMPUTATION'] == 'QL_WIKI':
                 # Q-Learning from from Wikipedia

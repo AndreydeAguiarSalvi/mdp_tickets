@@ -157,6 +157,7 @@ def main():
     # Validate the model #
     ######################
     test_loss = 0.0
+    classes = range(0, 10)
     class_correct = list(0. for i in range(10))
     class_total = list(0. for i in range(10))
     model.eval() # prep model for evaluation
