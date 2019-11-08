@@ -228,7 +228,7 @@ def main():
             if config['mdp']['Q_COMPUTATION'] == 'QL_M':
                 # Q-Learning from Ghallab, Nau and Traverso
                 q_value(q_table, state)[action] = q_value(q_table, state, action) + \
-                    ALPHA * (reward + q_value(q_table, next_state) - q_value(q_table, state, action))
+                    ALPHA * (reward + np.max(q_value(q_table, next_state)) - q_value(q_table, state, action))
 
             elif config['mdp']['Q_COMPUTATION'] == 'QL_WIKI':
                 # Q-Learning from from Wikipedia
