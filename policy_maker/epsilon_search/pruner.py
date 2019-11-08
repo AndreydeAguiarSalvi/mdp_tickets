@@ -70,23 +70,23 @@ def __create_args():
         description='Performs a Alpha Search with MDP.'
     )
     # General parameters
-    parser.add_argument('-d', '--device', help='Cuda to run the model', default=None)
-    parser.add_argument('-e_p', '--environment_protocol', help='The type of pruning', default=None)
+    parser.add_argument('-d', '--device', help='Cuda to run the model', type=str, default=None)
+    parser.add_argument('-e_p', '--environment_protocol', help='The type of pruning', type=str, default=None)
     # Model parameters
-    parser.add_argument('-m_a', '--model_architecture', help='The number of neurons of the NN', default=None)
+    parser.add_argument('-m_a', '--model_architecture', help='The number of neurons of the NN', type=list, default=None)
     # MDP parameters
-    parser.add_argument('-N_E', '--N_EPISODES', help='The maximum of episodes to agent perform', default=None)
-    parser.add_argument('-M_S', '--MAX_STEPS_PER_EPISODES', help='Maximum of steps per episode', default=None)
-    parser.add_argument('-A', '--ALPHA', help='Minimum number of Alpha for Alpha Search', default=None)
-    parser.add_argument('-G', '--GAMMA', help='Gamma', default=None)
-    parser.add_argument('-Q_C', '--Q_COMPUTATION', help='The equation to compute the Quality', default=None)
+    parser.add_argument('-N_E', '--N_EPISODES', help='The maximum of episodes to agent perform', type=int, default=None)
+    parser.add_argument('-M_S', '--MAX_STEPS_PER_EPISODES', help='Maximum of steps per episode', type=int, default=None)
+    parser.add_argument('-A', '--ALPHA', help='Minimum number of Alpha for Alpha Search', type=float, default=None)
+    parser.add_argument('-G', '--GAMMA', help='Gamma', type=float, default=None)
+    parser.add_argument('-Q_C', '--Q_COMPUTATION', help='The equation to compute the Quality', type=str, default=None)
     # Agent parameters
-    parser.add_argument('-p_e', '--prune_percentage', help='Percentage of weights to prune', default=None)
-    parser.add_argument('-eps', '--epsilon', help='Percentage of random actions from agent', default=None)
-    parser.add_argument('-r_t', '--reward_type', help='Type of reward computation', default=None)
+    parser.add_argument('-p_e', '--prune_percentage', help='Percentage of weights to prune', type=float, default=None)
+    parser.add_argument('-eps', '--epsilon', help='Percentage of random actions from agent', type=float, default=None)
+    parser.add_argument('-r_t', '--reward_type', help='Type of reward computation', type=str, default=None)
     # Train parameters
-    parser.add_argument('-e', '--epochs', help='The number of epochs to train the model before the pruning', default=None)
-    parser.add_argument('-prt', '--print_every', help='Print accuracy at every p_e epochs', default=None)
+    parser.add_argument('-e', '--epochs', help='The number of epochs to train the model before the pruning', type=int, default=None)
+    parser.add_argument('-prt', '--print_every', help='Print accuracy at every p_e epochs', type=int, default=None)
 
     args = vars(parser.parse_args())
     return args
