@@ -33,8 +33,6 @@ def __load_data(config):
     # choose the training and test datasets
     train_data = datasets.MNIST(root='../data', train=True,
                                     download=False, transform=transform)
-    test_data = datasets.MNIST(root='../data', train=False,
-                                    download=False, transform=transform)
 
     # obtain training indices that will be used for validation
     num_train = len(train_data)
@@ -52,10 +50,8 @@ def __load_data(config):
         sampler=train_sampler, num_workers=num_workers)
     valid_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, 
         sampler=valid_sampler, num_workers=num_workers)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, 
-        num_workers=num_workers)
 
-    return train_loader, valid_loader, test_loader
+    return train_loader, valid_loader
 
 
 def __adjust_config(config):
@@ -159,6 +155,7 @@ def main():
     # Validate the model #
     ######################
     test_loss = 0.0
+    classes = range(0, 10)
     class_correct = list(0. for i in range(10))
     class_total = list(0. for i in range(10))
     model.eval() # prep model for evaluation

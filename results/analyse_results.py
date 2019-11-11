@@ -36,4 +36,4 @@ for (root, dirs, files) in os.walk(args['path']):
         line.append(compute_results(results, args['mean_type']))
         dt.append(line)
 dt = pd.DataFrame(dt, columns=['SEARCH', 'ALPHA', 'GAMMA', 'PRUNE_TYPE', 'PRUNE_PERCENT', 'EPS', 'REWARD_TYPE', 'Q_UPDATE', 'ACCURACY'])
-dt.to_csv('summary_of_results.tsv', sep='\t')
+dt.to_csv('summary_of_results_{}.tsv'.format(args['path']), sep='\t')

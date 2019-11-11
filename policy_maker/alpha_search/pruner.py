@@ -39,8 +39,6 @@ def __load_data(config):
     # choose the training and test datasets
     train_data = datasets.MNIST(root= config['working_dir'] + '/data', train=True,
                                     download=False, transform=transform)
-    test_data = datasets.MNIST(root= config['working_dir'] + '/data', train=False,
-                                    download=False, transform=transform)
 
     # obtain training indices that will be used for validation
     num_train = len(train_data)
@@ -58,10 +56,8 @@ def __load_data(config):
         sampler=train_sampler, num_workers=num_workers)
     valid_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, 
         sampler=valid_sampler, num_workers=num_workers)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, 
-        num_workers=num_workers)
 
-    return train_loader, valid_loader, test_loader
+    return train_loader, valid_loader
 
 
 def __create_args():
@@ -136,7 +132,7 @@ def main():
     config = __adjust_config(args, config)
 
     # loading the dataset
-    train_loader, valid_loader, test_loader = __load_data(config)
+    train_loader, valid_loader = __load_data(config)
 
     # Creating the model
     model = NN(config['model']['architecture'], is_maskable = True)
