@@ -8,7 +8,7 @@
         "N_EPISODES" : 15,
         "MAX_STEPS_PER_EPISODES" : 1000,
         "GAMMA" : 0.9,
-        "Q_COMPUTATION" : "SARSA",
+        "Q_COMPUTATION" : "QL_M",
         "ALPHA" : 0.9
     },
     "model" : {
@@ -38,7 +38,7 @@
         "train_loss" : 0,
         "valid_loss" : 0
     },
-    "working_dir" : "/A/andrey/mdp_tickets",
-    "device" : "cuda:3",
+    "working_dir" : "/home/andrey/Documents/mdp_tickets",
+    "device" : "cuda:0",
     "environment_protocol" : "ROW"
 }

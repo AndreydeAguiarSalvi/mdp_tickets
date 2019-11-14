@@ -56,8 +56,8 @@ def __load_data(config):
 
 def __adjust_config(config):
     x = config['policy_dir'].split('__')
-    environment_protocol = x[2].split('-')[1]
-    prune_percentage = float(x[3].split('-')[1])
+    environment_protocol = x[3].split('-')[1]
+    prune_percentage = float(x[4].split('-')[1])
 
     config['environment_protocol'] = environment_protocol
     config['prune_percentage'] = prune_percentage
@@ -95,11 +95,8 @@ def main():
 
     config = __adjust_config(config)
 
-    if len(sys.argv) == 2:
-        config['policy_dir'] = sys.argv[1]
-
     # loading the dataset
-    train_loader, valid_loader, test_loader = __load_data(config)
+    train_loader, valid_loader = __load_data(config)
 
     # Creating the model
     model = NN(config['model']['architecture'], is_maskable = True)
