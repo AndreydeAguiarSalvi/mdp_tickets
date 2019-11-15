@@ -75,13 +75,13 @@ def main():
 
     for i in range(10):
         if class_total[i] > 0:
-            logging.info('Test Accuracy of %5s: %2d%% (%2d/%2d)' % (
+            logging.info('Test Accuracy of {}: {}% ({}/{})'.format(
                 str(i), 100 * class_correct[i] / class_total[i],
                 np.sum(class_correct[i]), np.sum(class_total[i])))
         else:
             logging.info('Test Accuracy of %5s: N/A (no training examples)' % (classes[i]))
 
-    logging.info('Test Accuracy (Overall): %2d%% (%2d/%2d)' % (
+    logging.info('Test Accuracy (Overall): {}% ({}/{})'.format(
         100. * np.sum(class_correct) / np.sum(class_total),
         np.sum(class_correct), np.sum(class_total)))
 
