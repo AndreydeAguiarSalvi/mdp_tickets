@@ -23,7 +23,7 @@ conda install pytorch torchvision cudatoolkit=YOUR_NVIDIA-DRIVER_VERSION -c pyto
 ### Folders ###
 
 #### common ####
-Here we have the implementations of
+##### Here we have the implementations of #####
 * Agent
 * State
 * Neural Network (net.py)
@@ -33,14 +33,14 @@ Here we have the implementations of
 The dataset is downloaded here.
 
 #### policy_maker ####
-Here we have the implementations of:
+##### Here we have the implementations of ##### 
 * epsilon_search: the Decreasing Epsilon-Greedy Search to learn the Q-Table.
-** prunner.py: create the agent and learn the Q-Table.
-** params.json: the hyperparameters for the Neural Network, Agent and etc.
-** job.sh: to run manny tests in bash.
+    * prunner.py: create the agent and learn the Q-Table.
+    * params.json: the hyperparameters for the Neural Network, Agent and etc.
+    * job.sh: to run manny tests in bash.
 
 #### results ####
-The results will be saved here.
+##### The results will be saved here ##### 
 * analyse_results: will summarize the results obtained.
 * test.py: will analyse the results of your model on test dataset.
 
@@ -48,7 +48,7 @@ The results will be saved here.
 Just train a model without pruning.
 
 #### training_pruning ####
-Will train and prune iteratively:
+##### Will train and prune iteratively ##### 
 * lottery_tickets.py: prune with the original algorithm from Frankle and Carbin.
 * mdp_tickets: prune with a Q-Table already learned.
 * params.json: the hyperparameters to use.
