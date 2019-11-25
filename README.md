@@ -23,7 +23,7 @@ conda install pytorch torchvision cudatoolkit=YOUR_NVIDIA-DRIVER_VERSION -c pyto
 ### Folders ###
 
 #### common ####
-Here we have the implementations of:
+Here we have the implementations of
 * Agent
 * State
 * Neural Network (net.py)
