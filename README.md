@@ -6,9 +6,9 @@ This is my implementation of Lottery Tickets Hyphotesis using Markov Decision Pr
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Work for the discipline Automated Planning, 2019-2, Teacher [Felipe Meneguzzi](https://github.com/meneguzzi) at Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS)
+* Pruning Multi-Layer Perceptrons
+* Classical Planning
 
 ## Installation
 ### Environment - Prerequisites
@@ -20,16 +20,39 @@ conda install -c anaconda pandas
 conda install -c anaconda numpy 
 conda install pytorch torchvision cudatoolkit=YOUR_NVIDIA-DRIVER_VERSION -c pytorch
 ```
-### Contribution guidelines ###
+### Folders ###
 
-* Writing tests
-* Code review
-* Other guidelines
+#### common ####
+Here we have the implementations of:
+* Agent
+* State
+* Neural Network (net.py)
+* Some utility functions (utils.py)
 
-### Who do I talk to? ###
+#### data ####
+The dataset is downloaded here.
 
-* Repo owner or admin
-* Other community or team contact
+#### policy_maker ####
+Here we have the implementations of:
+* epsilon_search: the Decreasing Epsilon-Greedy Search to learn the Q-Table.
+** prunner.py: create the agent and learn the Q-Table.
+** params.json: the hyperparameters for the Neural Network, Agent and etc.
+** job.sh: to run manny tests in bash.
+
+#### results ####
+The results will be saved here.
+* analyse_results: will summarize the results obtained.
+* test.py: will analyse the results of your model on test dataset.
+
+#### training ####
+Just train a model without pruning.
+
+#### training_pruning ####
+Will train and prune iteratively:
+* lottery_tickets.py: prune with the original algorithm from Frankle and Carbin.
+* mdp_tickets: prune with a Q-Table already learned.
+* params.json: the hyperparameters to use.
+* job.sh: to execute manny tests in bash.
 
 ## Credit
 ```

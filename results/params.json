@@ -1,6 +1,7 @@
 {
     "architecture" : [784, 300, 100, 10],
     "batch_size" : 512,
+    "valid_size" : 0.2,
     "model_path" : "MLP_300_100/Lottery_Tickets",
     "device" : "cuda:0"
 }
